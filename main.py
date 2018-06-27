@@ -1,4 +1,4 @@
-from config import prefix, TOKEN, welcome_channel
+from config import prefix, TOKEN, welcome_channel, down_time
 from check import is_command, users
 import threading
 import discord
@@ -86,7 +86,7 @@ async def on_ready():
 
 # Thread that lowers activity
 def punish_inactives():
-  threading.Timer(10.0, punish_inactives).start()
+  threading.Timer(down_time, punish_inactives).start()
   conn2 = sqlite3.connect('database.db')
   c2 = conn2.cursor()
   print('Purging!')
