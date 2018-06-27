@@ -4,9 +4,9 @@ This bot is one that monitors players' activity and gives them a score based on 
 ## Python packages
 There are a few packages that the program may not have. As the bot is using the rewrite version of discord.py, if any packages aren't downloaded correctly, set up
 
-  pip install threading
-  pip install discord.py
-  pip install https://github.com/Rapptz/discord.py/archive/rewrite.zip
+    pip install threading  
+    pip install discord.py  
+    pip install https://github.com/Rapptz/discord.py/archive/rewrite.zip  
  
 ## Setting up the bot
 Once you have all packages installed, fill in all the data in config.py, and run
