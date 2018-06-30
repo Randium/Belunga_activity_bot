@@ -12,7 +12,7 @@ print("Are you sure you want to reformat the database? All data will be lost, an
 print("Tip: If you want a new database without destroying the old one, create a new file with the .db extension and use that one.")
 if input("If you still want to reformat the database, please type YES to continue.") == "YES":
     c.execute("DROP TABLE IF EXISTS 'users'")
-    c.execute("CREATE TABLE 'users' ('id' TEXT NOT NULL, 'name'	TEXT, 'activity' REAL NOT NULL DEFAULT 0, PRIMARY KEY ('id'));")
+    c.execute("CREATE TABLE 'users' ('id' TEXT NOT NULL, 'name' TEXT, 'spam_activity' REAL NOT NULL DEFAULT 0, 'activity' REAL NOT NULL DEFAULT 0, 'spam_filter' INTEGER NOT NULL DEFAULT 500 PRIMARY KEY(`id`));")
     print("The file {} has been formatted successfully and is now ready to be used!".format(database))
 else:
     print("Formatting canceled.")
