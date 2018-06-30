@@ -137,8 +137,8 @@ def punish_inactives():
   print('Purging!')
   c2.execute("SELECT * FROM 'users'")
   leaderboard = [[user[2],user[1]] for user in c2.fetchall() if user[2] > 0]
-  leaderboard.sort()
-  print(leaderboard)
+  leaderboard.sort(reverse = True)
+  print(leaderboard[0:min(3,len(leaderboard)])
   c2.execute("UPDATE 'users' SET spam_activity = 0 WHERE spam_activity > 2*spam_filter;")
   c2.execute("UPDATE 'users' SET activity = activity + spam_activity*spam_activity/-spam_filter + 2*spam_activity;")
   c2.execute("UPDATE 'users' SET activity= activity*0.9958826236;")
