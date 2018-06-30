@@ -39,3 +39,34 @@ def users(message,amount = -1, delete_duplicates = True):
         return user_table
 
     return [user_table[i] for i in range(amount)]
+
+def check_for_int(s):
+    try:
+        int(s)
+        return True
+    except ValueError:
+        return False
+
+def numbers(message,amount = -1, delete_duplicates = True):
+    """Return the requested amount of numbers in a list. If the amount is -1, all users are given.
+
+    Keyword arguments:
+    message -> the Discord message to inspect
+    amount -> the wanted amount of numbers in a list
+    delete_duplicates -> filter out numbers that are mentioned twice in the message
+    """
+    number_table = []
+    for piece in message.content.split(' '):
+        if check_for_int(piece):
+            number_table.append(int(piece))
+
+    if delete_duplicates == True:
+        number_table = list(set(number_table))
+
+    if max(amount,1) > len(number_table):
+        return False
+
+    if amount == -1:
+        return number_table
+
+    return [number_table[i] for i in range(amount)]
