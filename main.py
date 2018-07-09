@@ -1,4 +1,4 @@
-from config import prefix, TOKEN, welcome_channel, down_time
+from config import prefix, TOKEN, welcome_channel, blacklisted_channels, down_time
 from check import is_command, users, numbers
 import threading
 import discord
@@ -18,18 +18,20 @@ async def on_message(message):
     main_guild = client.get_channel(welcome_channel).guild
     messenger = message.author
     temp_msg = []
+    
+    # the bot must not give points in channels it is not supposed to
+    if message.channel.id not in blacklisted_channels:
+        # Check if the user already exists in the database. If not, create 'em.
+        c.execute("SELECT * FROM 'users' WHERE id =?",(messenger.id,))
+        if c.fetchone() == None:
+            c.execute("INSERT INTO 'users'('id','name') VALUES (?,?);",(messenger.id,messenger.name))
+            print("New user! User {} has been registered to the bot.".format(message.author.name))
+            conn.commit()
 
-    # Check if the user already exists in the database. If not, create 'em.
-    c.execute("SELECT * FROM 'users' WHERE id =?",(messenger.id,))
-    if c.fetchone() == None:
-        c.execute("INSERT INTO 'users'('id','name') VALUES (?,?);",(messenger.id,messenger.name))
-        print("New user! User {} has been registered to the bot.".format(message.author.name))
+        # Give the user a point to their score
+        c.execute("UPDATE 'users' SET spam_activity= spam_activity +1 WHERE id=?;",(messenger.id,))
+        c.execute("UPDATE 'users' SET name =? WHERE id =?",(messenger.name,messenger.id))
         conn.commit()
-
-    # Give the user a point to their score
-    c.execute("UPDATE 'users' SET spam_activity= spam_activity +1 WHERE id=?;",(messenger.id,))
-    c.execute("UPDATE 'users' SET name =? WHERE id =?",(messenger.name,messenger.id))
-    conn.commit()
 
     # Ignore commands if they are not in the right channel
     if message.channel.id not in [251873803779571714, welcome_channel]:
