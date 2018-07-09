@@ -1,6 +1,9 @@
 '''This is the channel where the bot tells it has gone online, and it uses the channel to remember what its main server is.'''
 welcome_channel = 457270968440848385
 
+'''These are channels the bot completely ignores'''
+blacklisted_channels = [269670622647418891]
+
 '''The amount of time before the activity is lowered. The default is 3600.0, at which rate players' activity lowers 10% per day
 and about 50% per week. Lowering this number will speed that up.
 
